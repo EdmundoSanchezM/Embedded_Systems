@@ -1,0 +1,51 @@
+#!/bin/sh
+
+PATH_PID=/var/run/demonio.pid
+MI_PID=$(cat $PATH_PID )
+
+function verificaDemonio(){
+	if [ -e $PATH_PID ]
+	then 
+		if [ -d /proc/$MI_PID ]
+		then
+			echo "Demonio con pid: $MI_PID en ejecucion"
+			return 0	#CODIGO DE EXITO
+		fi
+	fi
+	echo "Demonio NO esta en ejecucion"
+	return 1	#CODIGO DE ERROR
+}
+
+case $1 in
+	start)
+		echo "Opcion de start"
+		if verificaDemonio
+		then
+			echo "Demonio con pid: $MI_PID en ejecucion no es necesario iniciarlo"
+		else
+			/usr/local/bin/servidor
+			echo "Demonio iniciado"
+		fi
+	;;
+	stop)
+		echo "Opcion de stop"
+		if verificaDemonio
+		then
+			kill -SIGKILL $MI_PID
+			echo "Demonio detenido"
+		else
+			echo "El demonio no esta en ejecucion no es necesario detenerlo"
+		fi
+	;;
+	status)
+		echo "Opcion de status"
+		verificaDemonio
+	;;
+	*)
+		echo "Error de Sintaxis"
+		echo "Sintaxis: $0 [start|stop|status]"
+	;;
+esac
+
+exit 0 #EXITO
+#exit 1  #FALLA O ERROR

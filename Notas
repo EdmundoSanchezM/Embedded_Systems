@@ -1,0 +1,6 @@
+gcc archivo -o nombrecompilado -lm -Wall
+gnuplot -> plot "archivo nombre" // se hace las graficas con cruces en los puntos del archivo
+gnuplot -> plot "archivo nombre" with lines // se hace la grafica con lineas uwu
+gcc -c nombre.c -Wall, genera codigo objeto
+Enlazador, agarra los codigo objeto y los une uwu
+gcc arhivosobjeto.o -o nombre -lm (libreria mathematica)

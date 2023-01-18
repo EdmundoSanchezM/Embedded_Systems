@@ -1,0 +1,23 @@
+[Unit]
+Description     = Demonio camara
+After           = syslog.target
+
+[Service]
+#Tipo = simple (predeterminado): systemd considera que el servicio se inicia inmediatamente. 
+#El proceso no debe bifurcarse.
+#No utilizar si es necesario solicitar otros servicios en este servicio, a menos que esté activado por socket.
+#Tipo = oneshot: esto es útil para scripts que hacen un solo trabajo y luego salen.
+#Es posible que desee establecer RemainAfterSalir = yes también para que systemd aún
+#considere el servicio como activo después de que el proceso haya finalizado.
+Type            = simple
+ExecStart       = /usr/local/bin/camara.sh
+
+KillMode        = mixed
+
+Restart         = always
+RestartSec      = 5s
+
+StandardOutput  = syslog
+
+[Install]
+WantedBy        = multi-user.target
